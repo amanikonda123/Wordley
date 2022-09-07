@@ -15291,7 +15291,6 @@ const dictionary = [
   ]
 const WORD_LENGTH = 5
 const guessGrid = document.querySelector("[data-guess-grid]")
-const offsetFromDate = new Date(2022, 0, 1)
 const targetWord = ""
 
 startInteraction()
