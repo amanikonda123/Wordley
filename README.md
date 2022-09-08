@@ -3,6 +3,7 @@ Clone of The New York Times' game, "Wordle."
 Link to deployed game: https://chic-gnome-d40495.netlify.app/
 
 Rules:
+
 1.) Guess the WORDLEY in 6 tries.
 
 2.) Each guess must be a valid 5-letter word. Hit the enter button to submit.
