@@ -15290,9 +15290,12 @@ const dictionary = [
     "shave"
   ]
 const WORD_LENGTH = 5
+const alertContainer = document.querySelector("[data-alert-container]")
 const guessGrid = document.querySelector("[data-guess-grid]")
-const targetWord = ""
-
+const offsetFromDate = new Date(2022, 0, 1)
+const msOffset = Date.now() - offsetFromDate
+const dayOffset = msOffset/1000/60/60/24
+const targetWord = targetWords[Math.floor(dayOffset)]
 startInteraction()
 
 function startInteraction() {
@@ -15362,9 +15365,43 @@ function deleteKey() {
 }
 
 function submitGuess() {
+    const activeTiles = [...getActiveTiles()]
+    if (activeTiles.length !== WORD_LENGTH) {
+        showAlert("Not enough letters")
+        shakeTiles(activeTiles)
+        return
+    }
 
+    const guess = activeTiles.reduce((word, tile) => {
+        return word + tile.dataset.letter
+    }, "")
 }
 
 function getActiveTiles() {
     return guessGrid.querySelectorAll('[data-state="active"]')
+}
+
+function showAlert(message, duration = 1000) {
+    const alert = document.createElement("div")
+    alert.textContent = message
+    alert.classList.add("alert")
+    alertContainer.prepend(alert)
+    if (duration == null) {
+        return
+    }
+    setTimeout(() => {
+        alert.classList.add("hide")
+        alert.addEventListener("transitionend", () => {
+            alert.remove()
+        })
+    }, duration)
+}
+
+function shakeTiles(tiles) {
+    tiles.forEach(tile =>  {
+        tile.classList.add("shake")
+        tile.addEventListener("animationend", () => {
+            tile.classList.remove("shake")
+        }, {once: true})
+    })
 }
