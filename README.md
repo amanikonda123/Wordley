@@ -1,5 +1,6 @@
 # Wordley
 Clone of The New York Times' game, "Wordle."
+
 Link to deployed game: https://chic-gnome-d40495.netlify.app/
 
 Rules:
