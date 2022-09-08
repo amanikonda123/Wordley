@@ -15299,6 +15299,7 @@ const offsetFromDate = new Date(2022, 0, 1)
 const msOffset = Date.now() - offsetFromDate
 const dayOffset = msOffset/1000/60/60/24
 const targetWord = targetWords[Math.floor(dayOffset)]
+console.log(targetWord)
 
 startInteraction()
 
@@ -15458,21 +15459,32 @@ function shakeTiles(tiles) {
 }
 
 function checkWinLose(guess, tiles) {
-    if (guess === targetWord) {
-        showAlert("You Win!!!", 5000)
-        danceTiles(tiles)
-        stopInteraction()
-        return
-    }
+  if (guess === targetWord) {
+    showAlert("You Win!", null)
+    danceTiles(tiles)
+    stopInteraction()
+    return
+  }
+
+  const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])")
+  if (remainingTiles.length === 0) {
+    showAlert("Correct word is \"" + targetWord.toUpperCase() + "\"", null)
+    stopInteraction()
+    return
+  }
 }
 
-function danceTiles() {
-    tiles.forEach((tile, index) =>  {
-        setTimeout(() => {
-            tile.classList.add("dance")
-            tile.addEventListener("animationend", () => {
-                tile.classList.remove("dance")
-            }, {once: true})
-        }, index * DANCE_ANIMATION_DURATION / 5)
-    })
+function danceTiles(tiles) {
+  tiles.forEach((tile, index) => {
+    setTimeout(() => {
+      tile.classList.add("dance")
+      tile.addEventListener(
+        "animationend",
+        () => {
+          tile.classList.remove("dance")
+        },
+        { once: true }
+      )
+    }, (index * DANCE_ANIMATION_DURATION) / 5)
+  })
 }
